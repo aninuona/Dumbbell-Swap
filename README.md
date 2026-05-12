@@ -1,10 +1,10 @@
-# DB Swap - Android App
+# Dumbbell Swap - Android App
 
 A Kotlin-based Android application that helps users find dumbbell-based alternatives to gym exercises when they have limited equipment.
 
 ## Project Overview
 
-**App Name:** DB Swap (Dumbbell Swap)  
+**App Name:** Dumbbell Swap  
 **Target API:** API 36.1 (Android 15+)  
 **Minimum API:** API 24 (Android 7.0 - Nougat)  
 **Language:** Kotlin  
