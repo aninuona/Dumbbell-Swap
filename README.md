@@ -220,4 +220,3 @@ Pre-populated exercises include:
 
 ## Credits
 Creator: github.com/aninuona
-**Language:** Kotlin 1.9+
