@@ -199,12 +199,10 @@ Pre-populated exercises include:
 
 ## Future Enhancements
 
-1. Add Glide library for exercise GIF animations
-2. Integrate ExerciseDB API for real exercise data
+2. Integrate ExerciseDB API 
 3. Add muscle group heatmap visualization
 4. Implement user profiles & saved routines
-5. Add weight unit conversion (lbs ↔ kg)
-6. Create favorites/history system
+6. Create favorites system
 
 ## Troubleshooting
 
