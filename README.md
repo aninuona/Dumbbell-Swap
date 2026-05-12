@@ -12,11 +12,11 @@ A Kotlin-based Android application that helps users find dumbbell-based alternat
 
 ## Features
 
-✅ **Exercise Search** - Auto-complete search for gym exercises  
-✅ **Dumbbell Inventory** - Track which dumbbells you own  
-✅ **Smart Filtering** - Results filtered by your max weight  
-✅ **Local Caching** - Room Database stores exercises  
-✅ **Bottom Navigation** - Easy access to Search and Inventory tabs  
+**Exercise Search** Auto-complete search for gym exercises  
+**Dumbbell Inventory** Track which dumbbells you own  
+**Smart Filtering** Results filtered by your max weight  
+**Local Caching** Room Database stores exercises  
+**Bottom Navigation** Easy access to Search and Inventory tabs  
 
 ## Project Structure
 
