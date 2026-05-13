@@ -9,7 +9,7 @@ import okhttp3.Interceptor
 
 object ApiClient {
     private const val BASE_URL = "https://exercisedb.p.rapidapi.com/"
-    private const val API_KEY = "242f93756amshfe7ff54e2ba46adp132b5fjsnbcba06d72aec"
+    private const val API_KEY = "RAPID_API_KEY"
     private const val API_HOST = "exercisedb.p.rapidapi.com"
 
     private val httpClient = OkHttpClient.Builder()
