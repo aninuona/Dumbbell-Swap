@@ -12,25 +12,22 @@ import androidx.room.Update
 @Dao
 interface ExerciseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertExercises(exercises: List<Exercise>)
+    fun insertExercises(exercises: List<Exercise>)
 
     @Query("SELECT * FROM exercises WHERE name LIKE '%' || :query || '%'")
     fun searchExercises(query: String): LiveData<List<Exercise>>
 
     @Query("SELECT * FROM exercises")
     fun getAllExercises(): LiveData<List<Exercise>>
-
-    @Query("DELETE FROM exercises")
-    suspend fun deleteAll()
 }
 
 @Dao
 interface InventoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertInventoryItems(items: List<InventoryItem>)
+    fun insertInventoryItems(items: List<InventoryItem>)
 
     @Update
-    suspend fun updateInventoryItem(item: InventoryItem)
+    fun updateInventoryItem(item: InventoryItem)
 
     @Query("SELECT * FROM inventory ORDER BY weightLbs ASC")
     fun getAllInventory(): LiveData<List<InventoryItem>>
@@ -39,5 +36,8 @@ interface InventoryDao {
     fun getMaxWeight(): LiveData<Int>
 
     @Query("DELETE FROM inventory")
-    suspend fun deleteAll()
+    fun deleteAll()
+
+    @Query("SELECT COUNT(*) FROM exercises")
+    fun getCount(): Int
 }
