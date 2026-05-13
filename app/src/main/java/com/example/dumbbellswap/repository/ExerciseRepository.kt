@@ -20,18 +20,59 @@ class ExerciseRepository(private val db: AppDatabase) {
     }
 
     suspend fun initializeSampleData() = withContext(Dispatchers.IO) {
-        // Pre-populate with sample exercises
+        val exerciseCount = db.exerciseDao().getCount()
+        if (exerciseCount > 0) {
+            return@withContext
+        }
+
+        try {
+            fetchExercisesFromAPI()
+        } catch (e: Exception) {
+            // Fallback to sample data if API fails
+            loadSampleData()
+        }
+    }
+
+    private suspend fun fetchExercisesFromAPI() = withContext(Dispatchers.IO) {
+        val exercises = mutableListOf<Exercise>()
+
+        try {
+            // Fetch dumbbell exercises
+            val dumbbellExercises = ApiClient.exerciseApiService.getExercisesByEquipment("dumbbell")
+            exercises.addAll(dumbbellExercises.map {
+                it.toExercise(it.name, it.target)
+            })
+        } catch (e: Exception) {
+            // If API fails, use sample data
+            loadSampleData()
+            return@withContext
+        }
+
+        val sampleInventory = listOf(
+            InventoryItem(5, false),
+            InventoryItem(10, false),
+            InventoryItem(15, false),
+            InventoryItem(20, false),
+            InventoryItem(25, false),
+            InventoryItem(30, false)
+        )
+
+        db.exerciseDao().insertExercises(exercises)
+        db.inventoryDao().insertInventoryItems(sampleInventory)
+    }
+
+    private suspend fun loadSampleData() = withContext(Dispatchers.IO) {
         val sampleExercises = listOf(
-            Exercise(1, "Lat Pulldown", "Lats", 10, "Dumbbell Pullover", "Lats"),
-            Exercise(2, "Lat Pulldown", "Lats", 10, "Renegade Row", "Lats"),
-            Exercise(3, "Barbell Bench Press", "Chest", 15, "Dumbbell Bench Press", "Chest"),
-            Exercise(4, "Leg Extension", "Quads", 20, "Dumbbell Goblet Squat", "Quads"),
-            Exercise(5, "Leg Curl", "Hamstrings", 15, "Single Leg Deadlift", "Hamstrings"),
-            Exercise(6, "Shoulder Press", "Shoulders", 10, "Dumbbell Shoulder Press", "Shoulders"),
-            Exercise(7, "Barbell Squat", "Legs", 20, "Dumbbell Goblet Squat", "Legs"),
-            Exercise(8, "Deadlift", "Back", 25, "Dumbbell Deadlift", "Back"),
-            Exercise(9, "Bicep Curl", "Biceps", 5, "Dumbbell Curl", "Biceps"),
-            Exercise(10, "Tricep Dip", "Triceps", 0, "Dumbbell Tricep Extension", "Triceps")
+            Exercise(1, "Lat Pulldown", "Lats", 10, "Dumbbell Pullover", "Lats", ""),
+            Exercise(2, "Lat Pulldown", "Lats", 10, "Renegade Row", "Lats", ""),
+            Exercise(3, "Barbell Bench Press", "Chest", 15, "Dumbbell Bench Press", "Chest", ""),
+            Exercise(4, "Leg Extension", "Quads", 20, "Dumbbell Goblet Squat", "Quads", ""),
+            Exercise(5, "Leg Curl", "Hamstrings", 15, "Single Leg Deadlift", "Hamstrings", ""),
+            Exercise(6, "Shoulder Press", "Shoulders", 10, "Dumbbell Shoulder Press", "Shoulders", ""),
+            Exercise(7, "Barbell Squat", "Legs", 20, "Dumbbell Goblet Squat", "Legs", ""),
+            Exercise(8, "Deadlift", "Back", 25, "Dumbbell Deadlift", "Back", ""),
+            Exercise(9, "Bicep Curl", "Biceps", 5, "Dumbbell Curl", "Biceps", ""),
+            Exercise(10, "Tricep Dip", "Triceps", 0, "Dumbbell Tricep Extension", "Triceps", "")
         )
 
         val sampleInventory = listOf(
